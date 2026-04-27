@@ -150,7 +150,14 @@ function showPS() {
 
     <div class="card">
       <h3>Execution Drivers</h3>
-      <p>Exhibición <span class="bad">0%</span></p>
+<p>Exhibición 0%</p>
+<div class="progress"><div class="progress-bar red" style="width:0%"></div></div>
+
+<p>Visibilidad 50%</p>
+<div class="progress"><div class="progress-bar orange" style="width:50%"></div></div>
+
+<p>Zona Natural 100%</p>
+<div class="progress"><div class="progress-bar" style="width:100%"></div></div>
       <p>Visibilidad <span class="mid">50%</span></p>
       <p>Zona Natural <span class="good">100%</span></p>
     </div>
@@ -195,7 +202,15 @@ function showSuppliers() {
         <h1>6</h1>
       </div>
     </div>
+<div class="card">
+<h3>Supplier Capacity Usage</h3>
+  
+  <div class="progress">
+    <div class="progress-bar" style="width:66%"></div>
+  </div>
 
+  <p style="margin-top:10px;">4 de 6 visitas utilizadas</p>
+</div>
     <div class="card">
       <h3>Calendar</h3>
       <div class="calendar">
