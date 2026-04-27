@@ -1,20 +1,23 @@
 const CLICKUP_TOKEN = "pk_180130505_1OBNPKK0MPUH9V6ZAYPK7BZCH9U7GEFS";
 
 const LISTS = {
-  "Marca Catador": "6-901711254034-1?pr=90174133669",
-  "Experiencia Clientes": "901711508851?pr=90174133669",
-  "Trade Marketing": "6-901713283738-1?pr=90174133669",
-  "Marcas Masivas": "901711254602?pr=90174133669",
-  "Promociones": "901713283884?pr=90174133669",
-  "Perfect Store": "901713283978?pr=90174133669"
+  "Marca Catador": "9017897443/v/li/901711254034",
+  "Experiencia Clientes": "9017897443/v/li/901711508851",
+  "Trade Marketing": "9017897443/v/li/901713283738",
+  "Marcas Masivas": "9017897443/v/li/901711254602",
+  "Promociones": "9017897443/v/li/901713283884",
+  "Perfect Store": "9017897443/v/li/901713283978"
 };
 
 async function getTasks(listId) {
-  const res = await fetch(`https://api.clickup.com/api/v2/list/${listId}/task`, {
+  const res = await fetch(
+  `https://api.clickup.com/api/v2/list/${listId}/task?include_closed=true`,
+  {
     headers: {
       "Authorization": CLICKUP_TOKEN
     }
-  });
+  }
+);
 
   const data = await res.json();
   return data.tasks || [];
