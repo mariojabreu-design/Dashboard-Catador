@@ -1,35 +1,34 @@
-const content = document.getElementById("content");
+function renderLayout(content) {
+  document.getElementById("app").innerHTML = `
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>El Catador</h2>
+        <button onclick="showHome()">🏠 Command Center</button>
+        <button onclick="showPS()">🏪 Perfect Store</button>
+        <button onclick="showSuppliers()">🧩 Proveedores</button>
+      </aside>
+      <main class="content">
+        ${content}
+      </main>
+    </div>
+  `;
+}
 
-//////////////////////////////////////////////////////////
-// DATA BASE SIMPLE (puedes luego conectar Excel)
-//////////////////////////////////////////////////////////
-
-let data = {
-  psScore: 46.7,
-  suppliersUsed: 4,
-  suppliersTotal: 6
-};
-
-//////////////////////////////////////////////////////////
-// COMMAND CENTER
-//////////////////////////////////////////////////////////
+/////////////////////////////
+// HOME - 6 EQUIPOS
+/////////////////////////////
 
 function showHome() {
-  content.innerHTML = `
+  renderLayout(`
     <h1>Command Center</h1>
 
-    <div class="grid">
-
-      <div class="card">
-        <h3>Perfect Store Score</h3>
-        <div class="kpi">${data.psScore}%</div>
-      </div>
-
-      <div class="card">
-        <h3>Supplier Capacity</h3>
-        <div class="kpi">${data.suppliersUsed}/${data.suppliersTotal}</div>
-      </div>
-
+    <div class="teams-grid">
+      <div class="team-card" onclick="showTeam('marca')">Marca Catador</div>
+      <div class="team-card" onclick="showTeam('cx')">Experiencia Clientes</div>
+      <div class="team-card" onclick="showTeam('trade')">Trade Marketing</div>
+      <div class="team-card" onclick="showTeam('masivo')">Marcas Masivas</div>
+      <div class="team-card" onclick="showTeam('promo')">Promociones</div>
+      <div class="team-card" onclick="showPS()">Perfect Store</div>
     </div>
 
     <div class="card">
@@ -51,69 +50,74 @@ function showHome() {
     <div class="card">
       <h3>Weekly Focus</h3>
       <ul>
-        <li>Implementar exhibiciones adicionales</li>
-        <li>Revisar Buzzballz</li>
-        <li>Optimizar agenda proveedores</li>
+        <li>Fireball - mejorar exhibición</li>
+        <li>Buzzballz - aumentar visibilidad</li>
+        <li>Grand Cuvée - activación premium</li>
       </ul>
     </div>
-
-    <div class="card">
-      <h3>Leadership Cadence (6 equipos)</h3>
-      <ul>
-        <li>Marca Catador</li>
-        <li>Experiencia Clientes</li>
-        <li>Trade Marketing</li>
-        <li>Marcas Masivas</li>
-        <li>Promociones</li>
-        <li>Perfect Store</li>
-      </ul>
-    </div>
-  `;
+  `);
 }
 
-//////////////////////////////////////////////////////////
-// PERFECT STORE (CON FILTROS)
-//////////////////////////////////////////////////////////
+/////////////////////////////
+// TEAM VIEW
+/////////////////////////////
 
-let filters = {
-  clase: "all",
-  marca: "all"
-};
-
-function showPS() {
-  content.innerHTML = `
-    <h1>Perfect Store</h1>
+function showTeam(team) {
+  renderLayout(`
+    <h1>${team.toUpperCase()}</h1>
 
     <div class="card">
-      <h3>Filtros</h3>
+      <h3>Top Priorities</h3>
+      <ul>
+        <li>Acción 1</li>
+        <li>Acción 2</li>
+        <li>Acción 3</li>
+      </ul>
+    </div>
 
-      <select onchange="filters.clase=this.value; showPS()">
-        <option value="all">Clase</option>
-        <option value="super">Supermercados</option>
-        <option value="colmado">Colmados</option>
+    <div class="card">
+      <h3>KPIs</h3>
+      <p>Performance: 72%</p>
+      <p>Trend: +5%</p>
+    </div>
+  `);
+}
+
+/////////////////////////////
+// PERFECT STORE
+/////////////////////////////
+
+function showPS() {
+  renderLayout(`
+    <h1>Perfect Store</h1>
+
+    <div class="card filters">
+      <h3>Filtros</h3>
+      <select>
+        <option>Clase</option>
+        <option>Supermercados</option>
+        <option>Colmados</option>
       </select>
 
-      <select onchange="filters.marca=this.value; showPS()">
-        <option value="all">Marca</option>
-        <option value="fireball">Fireball</option>
-        <option value="buzz">Buzzballz</option>
+      <select>
+        <option>Marca</option>
+        <option>Fireball</option>
+        <option>Buzzballz</option>
       </select>
     </div>
 
-    <div class="grid">
-
+    <div class="grid-2">
       <div class="card">
         <h3>Score</h3>
-        <div class="kpi">${data.psScore}%</div>
+        <h1>46.7%</h1>
       </div>
 
       <div class="card">
         <h3>Drivers</h3>
-        <p>Exhibición <span class="danger">0%</span></p>
-        <p>Visibilidad 50%</p>
-        <p>Zona Natural <span class="success">100%</span></p>
+        <p>Exhibición <span class="bad">0%</span></p>
+        <p>Visibilidad <span class="mid">50%</span></p>
+        <p>Zona Natural <span class="good">100%</span></p>
       </div>
-
     </div>
 
     <div class="card">
@@ -124,37 +128,27 @@ function showPS() {
         <li>Buzzballz necesita intervención</li>
       </ul>
     </div>
-
-    <div class="card">
-      <h3>Action Plan</h3>
-      <ul>
-        <li>Implementar exhibiciones adicionales</li>
-        <li>Mejorar visibilidad en colmados</li>
-      </ul>
-    </div>
-  `;
+  `);
 }
 
-//////////////////////////////////////////////////////////
-// PROVEEDORES
-//////////////////////////////////////////////////////////
+/////////////////////////////
+// PROVEEDORES + CALENDARIO
+/////////////////////////////
 
 function showSuppliers() {
-  content.innerHTML = `
+  renderLayout(`
     <h1>Atención Proveedores</h1>
 
-    <div class="grid">
-
+    <div class="grid-2">
       <div class="card">
         <h3>Capacidad</h3>
-        <div class="kpi">${data.suppliersUsed}/${data.suppliersTotal}</div>
+        <h1>4/6</h1>
       </div>
 
       <div class="card">
         <h3>Insight</h3>
         <p>No se está priorizando impacto en ejecución</p>
       </div>
-
     </div>
 
     <div class="card">
@@ -167,15 +161,17 @@ function showSuppliers() {
     </div>
 
     <div class="card">
-      <h3>Agenda</h3>
-      <ul>
-        <li>Diageo - Semana 1</li>
-        <li>Beam - Semana 3</li>
-      </ul>
+      <h3>Calendario</h3>
+      <div class="calendar">
+        <div>Semana 1: Diageo</div>
+        <div>Semana 2: Libre</div>
+        <div>Semana 3: Beam</div>
+        <div>Semana 4: Libre</div>
+      </div>
     </div>
-  `;
+  `);
 }
 
-//////////////////////////////////////////////////////////
+/////////////////////////////
 
 showHome();
