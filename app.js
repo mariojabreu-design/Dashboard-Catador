@@ -1,3 +1,25 @@
+const CLICKUP_TOKEN = "pk_180130505_1OBNPKK0MPUH9V6ZAYPK7BZCH9U7GEFS";
+
+const LISTS = {
+  "Marca Catador": "6-901711254034-1?pr=90174133669",
+  "Experiencia Clientes": "901711508851?pr=90174133669",
+  "Trade Marketing": "6-901713283738-1?pr=90174133669",
+  "Marcas Masivas": "901711254602?pr=90174133669",
+  "Promociones": "901713283884?pr=90174133669",
+  "Perfect Store": "901713283978?pr=90174133669"
+};
+
+async function getTasks(listId) {
+  const res = await fetch(`https://api.clickup.com/api/v2/list/${listId}/task`, {
+    headers: {
+      "Authorization": CLICKUP_TOKEN
+    }
+  });
+
+  const data = await res.json();
+  return data.tasks || [];
+}
+
 function renderLayout(content) {
   document.getElementById("app").innerHTML = `
     <div class="layout">
@@ -94,25 +116,23 @@ function teamCard(name) {
 // TEAM VIEW
 /////////////////////////////
 
-function showTeam(name) {
+async function showTeam(name) {
+  const listId = LISTS[name];
+  const tasks = await getTasks(listId);
+
   renderLayout(`
     <h1>${name}</h1>
 
-    <div class="grid-2">
-      <div class="card">
-        <h3>Top Priorities</h3>
-        <ul>
-          <li>Acción clave 1</li>
-          <li>Acción clave 2</li>
-          <li>Acción clave 3</li>
-        </ul>
-      </div>
+    <div class="card">
+      <h3>Tareas</h3>
 
-      <div class="card">
-        <h3>KPIs</h3>
-        <p>Performance: 72%</p>
-        <p>Trend: +5%</p>
-      </div>
+      ${tasks.map(t => `
+        <div class="card" style="margin-bottom:10px;">
+          <b>${t.name}</b><br/>
+          Status: ${t.status.status}<br/>
+          Priority: ${t.priority ? t.priority.priority : "None"}
+        </div>
+      `).join("")}
     </div>
   `);
 }
